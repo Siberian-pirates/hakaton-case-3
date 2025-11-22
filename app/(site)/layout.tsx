@@ -1,14 +1,19 @@
 import type { Metadata } from "next";
-import { Geist } from "next/font/google";
+import { Nunito } from "next/font/google";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+import "@/site/styles/globals/normalize.scss";
+import "@/site/styles/globals/colors.scss";
+import "@/site/styles/globals/variables.scss";
+import "@/site/styles/globals/globals.scss";
+
+const nunitoFont = Nunito({
+  variable: "--font-nunito",
   subsets: ["latin", "cyrillic"],
 });
 
 export const metadata: Metadata = {
-  title: "Космическая...",
-  description: "Космическая...",
+  title: "Сайт йоу",
+  description: "Сайт йоу",
 };
 
 export default function SiteRootLayout({
@@ -18,7 +23,7 @@ export default function SiteRootLayout({
 }>) {
   return (
     <html lang="ru">
-      <body className={geistSans.variable}>{children}</body>
+      <body className={nunitoFont.variable}>{children}</body>
     </html>
   );
 }

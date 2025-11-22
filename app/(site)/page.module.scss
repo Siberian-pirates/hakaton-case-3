@@ -1,0 +1,11 @@
+.jobs_container {
+  display: flex;
+
+  .jobs_filtres {
+    width: 200px;
+  }
+
+  .jobs_list {
+    flex: 1;
+  }
+}
