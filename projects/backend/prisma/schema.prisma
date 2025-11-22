@@ -1,0 +1,110 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Модель работодателя (админа)
+model Employer {
+  id               String   @id @default(uuid())
+  email            String   @unique
+  name             String // Название компании или имя контактного лица
+  password         String // Хешированный пароль
+  telegramChatId   String? // Telegram chat ID для уведомлений
+  telegramUsername String? // Telegram username
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  // Связь с вакансиями
+  vacancies Vacancy[]
+
+  @@map("employers")
+}
+
+// Модель вакансии
+model Vacancy {
+  id           String   @id @default(uuid())
+  title        String // Название вакансии
+  description  String   @db.Text // Описание вакансии
+  requirements String?  @db.Text // Требования к кандидату
+  salary       String? // Зарплата (может быть "от 100k" или "договорная")
+  location     String? // Локация (город, удаленка и т.д.)
+  isActive     Boolean  @default(true) // Открыта/закрыта вакансия
+  employerId   String // FK на работодателя
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  // Связи
+  employer   Employer     @relation(fields: [employerId], references: [id], onDelete: Cascade)
+  applicants Applicant[] // Отклики на вакансию
+  tags       VacancyTag[] // Many-to-many связь с тегами
+
+  @@index([employerId])
+  @@index([isActive])
+  @@map("vacancies")
+}
+
+// Модель тега/скила для фильтрации вакансий
+model Tag {
+  id        String   @id @default(uuid())
+  name      String   @unique // Название тега (например: "JavaScript", "React", "Python")
+  slug      String   @unique // URL-friendly версия (например: "javascript", "react")
+  createdAt DateTime @default(now())
+
+  // Связи
+  vacancies VacancyTag[]
+
+  @@map("tags")
+}
+
+// Промежуточная таблица для many-to-many связи между вакансиями и тегами
+model VacancyTag {
+  id        String   @id @default(uuid())
+  vacancyId String
+  tagId     String
+  createdAt DateTime @default(now())
+
+  // Связи
+  vacancy Vacancy @relation(fields: [vacancyId], references: [id], onDelete: Cascade)
+  tag     Tag     @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@unique([vacancyId, tagId]) // Один тег не может быть добавлен к вакансии дважды
+  @@index([vacancyId])
+  @@index([tagId])
+  @@map("vacancy_tags")
+}
+
+// Модель отклика/заявки соискателя
+model Applicant {
+  id               String            @id @default(uuid())
+  name             String // Имя соискателя
+  email            String // Email для уведомлений
+  phone            String? // Телефон
+  telegramUsername String? // Telegram username для уведомлений
+  telegramChatId   String? // Telegram chat ID (если соискатель подключил бота)
+  resume           String?           @db.Text // Резюме в текстовом формате
+  coverLetter      String?           @db.Text // Сопроводительное письмо
+  status           ApplicationStatus @default(PENDING) // Статус заявки
+  vacancyId        String // FK на вакансию
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+
+  // Связи
+  vacancy Vacancy @relation(fields: [vacancyId], references: [id], onDelete: Cascade)
+
+  @@index([vacancyId])
+  @@index([status])
+  @@index([email])
+  @@map("applicants")
+}
+
+// Enum статусов заявки
+enum ApplicationStatus {
+  PENDING // Новая заявка
+  REVIEWED // Просмотрена
+  ACCEPTED // Принята
+  REJECTED // Отклонена
+}
