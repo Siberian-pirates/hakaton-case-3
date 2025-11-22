@@ -1,0 +1,17 @@
+body {
+  font-family: var(--font-nunito);
+  background-color: var(--ui-color-dark);
+  color: var(--ui-color-light);
+}
+
+.root_container {
+  width: 100%;
+  max-width: var(--container-width);
+  margin: 0 auto;
+}
+
+main {
+  min-height: calc(100vh - var(--header-height));
+  background-color: var(--ui-color-light);
+  color: var(--ui-color-dark);
+}

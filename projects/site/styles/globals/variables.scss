@@ -1,0 +1,40 @@
+:root {
+  --color-primary: var(--ui-color-blue-200);
+  --color-text-primary: var(--ui-color-light);
+  --color-text-secondary: var(--ui-color-gray-100);
+  --color-text-muted: var(--ui-color-gray-800);
+  --color-background-primary: var(--ui-color-dark);
+  --color-background-secondary: var(--ui-color-light);
+  --color-border-primary: var(--ui-color-gray-800);
+  --color-border-secondary: var(--ui-color-gray-100);
+}
+
+:root {
+  --container-width: 1280px;
+  --header-height: 86px;
+
+  --z-index-header: 100;
+  --z-index-modal: 200;
+
+  --font-size-xs: 12px;
+  --font-size-sm: 14px;
+  --font-size-md: 15px;
+  --font-size-lg: 20px;
+  --font-size-xl: 24px;
+  --font-size-2xl: 32px;
+  --font-size-3xl: 40px;
+  --font-size-4xl: 48px;
+  --font-size-5xl: 56px;
+  --font-size-6xl: 64px;
+
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-2xl: 40px;
+  --spacing-3xl: 48px;
+  --spacing-4xl: 56px;
+  --spacing-5xl: 64px;
+  --spacing-6xl: 72px;
+}
