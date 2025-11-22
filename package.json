@@ -16,7 +16,7 @@
     "prisma:reset": "prisma migrate reset --schema=./projects/backend/prisma/schema.prisma --force"
   },
   "dependencies": {
-    "@prisma/client": "^7.0.0",
+    "@prisma/client": "^6.0.1",
     "@types/bcryptjs": "^3.0.0",
     "@types/jsonwebtoken": "^9.0.10",
     "@types/lodash": "^4.17.20",
@@ -35,7 +35,7 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "prisma": "^7.0.0",
+    "prisma": "^6.0.1",
     "typescript": "^5"
   }
 }
